@@ -1,34 +1,131 @@
 <div class="container">
-  <h1>Et maintenant, codons!</h1>
   <p>
     L'installation du projet est maintenant finie. Vous voila donc prets à commencer a coder. Le but de ce cours est de vous faire découvrir la magie d'Angular en créant une application utilisant l'API de google afin d'afficher et d'interragir avec une carte.
   </p>
   <p>
     Vous trouverez une liste de liens utiles ainsi que des informations sur l'API de google dans la partie droite du header.
   </p>
-
-  <ihm-section-title title="Création d'un composant" url="https://angular.io/api/core/Component"></ihm-section-title>
-  <p>Commencons par un des meilleurs avantages d'Angular, la création de composants.</p>
-  <p>
-    On va commencer par créer un composant permettant simplement d'afficher la carte obtenue grace aux <a href="https://developers.google.com/maps/documentation/javascript/tutorial" target="_blank">services de Google</a>.
-    Ces services sont pratiques quand il s'agit d'intégrer une carte à un site de base mais pour l'intégrer à un module ou composant angular, cela risque de prendre un peu plus de temps.
-    Au lieu de perdre du temps a faire ca, autant réutiliser un module Angular qui intègre déjà l'API: <a href="https://angular-maps.com/" target="_blank">Angular Google Maps</a>
+  <p><a href="https://github.com/MiniZimmy/AngularMap/tree/2c79edcc9be5bbaf09ae1b5ba81ed3862b0265a8">Repo at this point</a></p>
+  <ihm-section-title title="Création d'un composant simple" url="https://angular.io/api/core/Component"></ihm-section-title>
+  <p class="inline" Markdown>
+    On va commencer par créer un composant `map` permettant simplement d'afficher la carte obtenue grace aux <a href="https://developers.google.com/maps/documentation/javascript/tutorial" target="_blank">services de Google</a>.
+    On pourrait utiliser directement ces services dans notre application mais l'intégration à Angular pourrait nous demander un travail supplémentaire.
+    Ceci n'étant pas le sujet de ce tutoriel, utilisons directement la librairie <a class="inline"href="https://angular-maps.com/" target="_blank">Angular Maps</a> qui fait le travail pour nous.
   </p>
-  <p>Forts de toutes ces informations, vous etes prets a écrire votre premier composant Angular:</p>
-  <markdown path="./code/component/component.ts"></markdown>
-  <p>Il faut ensuite l'importer et le déclarer dans le module:</p>
-  <markdown path="./code/component/module.ts"></markdown>
+  <p class="inline" Markdown>
+    Avant de commencer à coder, il faut installer cette librairie dans le projet avec npm: `npm install @agm/core --save`.
+    La librairie sera téléchargée et installée dans le dossier `node_modules` avec les autres dépendences.
+  </p>
+  <p>
+    Une fois la librairie installée, il faut importer le module exporté par cette librairie qui contiendra toutes les fonctionnalités et composants qu'elle propose.
+    D'après la documentation, il faut ajouter notre clé Google Maps API à l'import du module:
+  </p>
+  <markdown path="./code/component/module.1.ts"></markdown>
+  <p class="inline" Markdown>
+    On a maintenant accès aux composants et services de `AgmCoreModule` dans ce module.
+    Pour déclarer un composant Angular, on utilise le décorateur `@Component`.
+    Le décorateur est une fonction qui modifie la classe JavaScript pour ajouter des méta-données qui seront utile à Angular pour définir le role de cette classe.
+    Cette fonction accepte plusieurs propriétés en paramètres, les plus importantes sont les suivantes: (cf [doc](https://angular.io/api/core/Component))
+    - `selector`: css selector that identifies this component in a template
+    - `template`/`templateUrl`: Template of the view or url to the template file
+    - `styles`/`styleUrls`: Styles to be applied to the component's view or Urls to the stylesheets
+  </p>
+  <markdown path="./code/component/map.ts"></markdown>
+  <p>Le template: </p>
+  <markdown path="./code/component/map.html"></markdown>
+  <p class="inline" Markdown>
+    Comme la documentation le prescrit, n'oubliez pas de définir une taille pour le composant `agm-map`
+  </p>
+  <markdown path="./code/component/map.scss"></markdown>
+  <p class="inline" Markdown>
+    Maitenant que le composant est créé, il faut le déclarer dans un module pour pouvoir l'utiliser. Pour le moment, on le déclare dans le module principal (`AppModule`), on l'utilisera pour le moment dans le `AppComponent`:
+  </p>
+  <markdown path="./code/component/module.2.ts"></markdown>
   <p>Enfin, il suffit de faire référence au nouveau tag dans le html</p>
   <markdown path="./code/component/template.html"></markdown>
+  <p>
+    Une carte centrée sur Toulouse devrait maintenant apparaitre en haut de cette page. Vous venez donc de créer votre premier composant Angular.
+    Les choses les plus importantes à retenir de cette première étape sont ... TODO
+  </p>
+  <p>
+    Pour continuer, nous allons maintenant créer notre propre module qui contiendra notre composant map.
+    On pourrait définir tous nos composants dans le meme module mais du code serait alors nécéssaire pour exporter ce composant dans un autre projet.
+    De plus, nous pouvons ainsi, dans chaque module, choisir les composants que nous voulons ou pas. Si nous avions déclaré tous nos composants
+    dans le meme module, nous serions obligés de tout importer à chaque fois que nous voulons utiliser un composant ou service.
+  </p>
 
   <ihm-section-title title="Création d'un module" url="https://angular.io/api/core/NgModule"></ihm-section-title>
-  <p></p>
+  <p class="inline" Markdown>
+    Afin de créer un module Angular (à ne pas confondre avec un module ES6 -- tout fichier qui `export` quelque chose), on va utiliser le décorateur`@NgModule`.
+    Tout comme le décorateur du composant, on peut / doit lui renseigner quelques propriétés pour déclarer notre module.
+    Les plus importantes sont les suivantes: ([doc](https://angular.io/api/core/NgModule))
+    - `declarations`: Classes des composants (Component), directives et filtres (Pipes) déclarée par le module
+    - `imports`: Modules dont dépend le module
+    - `providers`: Services créés par ce module
+    - `exports`: Classes déclarées qui doivent etre visibles par les autres modules
+    - `bootstrap`: Seulement utilisé par le root module, pour définir le root component
+  </p>
+  <p>
+    On profite de ce petit refactoring pour nettoyer un peu notre code.
+    Tous les fichiers sont dans le meme dossier et c'est déjà presque illisible alors qu'il n'y a que deux composants!
+    On utilisera le dossier components qui à déjà été créé pour faire la page que vous etes en train de lire.
+  </p>
+  <p class="inline" Markdown>
+    Apres avoir déplacé nos fichiers `map.*` dans le dossier `map`.
+    On peut déclarer notre nouveau module de la meme facon que le module `AppModule`:
+  </p>
+  <markdown path="./code/module/map.module.ts"></markdown>
+  <p>
+    La déclaration du module est très simple: On déclare les components et pipes de ce module, on importe les modules dont
+    on va avoir besoin et enfin on exporte les composants qui seront utilisés dans les templates des composants qui font partie
+    d'un module qui importe ce module.
+  </p>
+  <p class="inline" Markdown>
+    L'import du module `AgmCoreModule` est utile afin d'utiliser le composant `agm-map`.
+    Celui ci n'étant plus utilisé dans `app.template.html`, on peut donc enlever sont import de `AppModule`.
+    A la place, on peut maintenant importer notre module afin d'utiliser notre nouveau composant dans `app.template.html`.
+  </p>
+  <markdown path="./code/module/app.module.ts"></markdown>
+  <p class="inline" Markdown>
+    Il est bon de remarquer que pour importer le module ES6 `mapModule`, nous avons simplement spécifié le dossier de composants
+    `import {{ '{' }} MapModule {{ '}' }} from './components';`.
+    Ici on veut importer `MapModule` depuis `./component`. La `class` MapModule sera alors cherchée dans `./components/index.ts`,
+    qui quant à lui exporte tout le contenu de `./map/index.ts`, fichier dans lequel la classe `MapModule` est exportée.
+  </p>
+  <p>
+    Cela permet non seulement d'éviter de de devoir spécifier le chemin jusqu'au fichier qui contient la déclaration qui nous intéresse
+    mais aussi de pourvoir regrouper les imports de tous nos futurs composants en une ligne.
+  </p>
+  <p class="inline" Markdown>
+    Maintenant que notre `MapModule` est importé dans le `AppModule`, on peut utiliser `MapComponent` dans le template de `AppComponent`.
+    Il suffit alors de remplacer le composant appelé dans `app.component.html`:
+  </p>
+  <markdown path="./code/module/app.html"></markdown>
 
-  <ihm-section-title title="Création d'un service"></ihm-section-title>
+  <ihm-section-title title="Angular routing" url="https://angular.io/api/core/NgModule"></ihm-section-title>
+  <p class="inline" Markdown>
+    Le but de cette section est de créer une nouvelle page "map" dans l'application.
+    Cette page affichera seulement le composant `MapComponent` dans un premier temps.
+    Angular fournit déjà plusieurs modules afin d'implémenter du routing dans une application Angular.
+    Cette application l'implémente déjà mais n'a pour le moment qu'une seule page à afficher.
+  </p>
+  <p class="inline" Markdown>
+    TODO: Explain current routing solution: Magic happens in `app.routing.ts` with lazy loading (`loadChildren`).
+    Chaque module "lazy loadé" devra ensuite définir le composant qui doit etre loadé.
+    - We use the property loadChildren instead of component.
+    - We pass a string instead of a symbol to avoid loading the module eagerly.
+    - We define not only the path to the module but the name of the class as well.
+  </p>
+  <p class="inline" Markdown>
+    Commencons par définir notre nouvelle route `map`.
+  </p>
+  <markdown path="./code/routing/routing.ts"></markdown>
+
+  <markdown path="./code/routing/map.module.ts"></markdown>
+
+  <ihm-section-title title="Création d'un service" ></ihm-section-title>
   <p><a href="https://angular.io/guide/dependency-injection">Dependency injection</a></p>
   <p><a href="http://reactivex.io/rxjs/manual/overview.html#subject"> RXJS Subjects</a></p>
-
-
 
   <a href="http://brianflove.com/2016/10/18/angular-2-google-maps-places-autocomplete/">Google places</a>
 

@@ -1,4 +1,15 @@
+@import "variables";
+
 :host {
   text-align: left;
   padding: 1.2rem;
+  ::ng-deep .inline {
+    p {
+      margin-bottom: 0;
+      display: inline-block;
+    }
+  }
+  ::ng-deep pre {
+    border: 1px solid $site-primary-color;
+  }
 }

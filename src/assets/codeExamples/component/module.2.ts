@@ -5,11 +5,12 @@ import { CommonModule } from "@angular/common";
 import { HomeModule } from './components';
 import { Header } from "./common";
 import { AppComponent } from './app.component';
-import { MapComponent } from './map.component';
+import { MapComponent } from './map.component'; //Import the new map component
 
 @NgModule({
   declarations: [
-    AppComponent, MapComponent
+    AppComponent,
+    MapComponent //Declare the MapComponent so you can use it in this module
   ],
   imports: [
     BrowserModule, CommonModule,

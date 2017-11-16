@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-declare var google: any;
-
 @Component({
-  selector: 'ihm-map',
+  selector: 'app-map', //Create the <app-map> tag
   templateUrl: './map.template.html',
   styleUrls: ['./map.style.scss']
 })
@@ -15,8 +13,8 @@ export class MapComponent implements OnInit {
 
   ngOnInit() {
     this.coordinates = {
-      latitude: 43,
-      longitude: 7
+      latitude: 43.604652, //TOLOSA
+      longitude: 1.444209
     };
   }
 
