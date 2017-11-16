@@ -1,0 +1,19 @@
+/* You can add global styles to this file, and also import other style files */
+@import "variables";
+@import "./prism.css";
+
+html {
+  font-size: 18px;
+  color: $site-text-color;
+  body {
+    background-color: $site-background-color;
+    h1 {
+      font-size: 2rem;
+      color: $site-primary-color;
+    }
+    h2 {
+      font-size: 1.4rem;
+      color: $site-secondary-color;
+    }
+  }
+}

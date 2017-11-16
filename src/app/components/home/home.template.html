@@ -1,0 +1,63 @@
+<div class="container">
+  <h1>Et maintenant, codons!</h1>
+  <p>
+    L'installation du projet est maintenant finie. Vous voila donc prets à commencer a coder. Le but de ce cours est de vous faire découvrir la magie d'Angular en créant une application utilisant l'API de google afin d'afficher et d'interragir avec une carte.
+  </p>
+  <p>
+    Vous trouverez une liste de liens utiles ainsi que des informations sur l'API de google dans la partie droite du header.
+  </p>
+
+  <ihm-section-title title="Création d'un composant" url="https://angular.io/api/core/Component"></ihm-section-title>
+  <p>Commencons par un des meilleurs avantages d'Angular, la création de composants.</p>
+  <p>
+    On va commencer par créer un composant permettant simplement d'afficher la carte obtenue grace aux <a href="https://developers.google.com/maps/documentation/javascript/tutorial" target="_blank">services de Google</a>.
+    Ces services sont pratiques quand il s'agit d'intégrer une carte à un site de base mais pour l'intégrer à un module ou composant angular, cela risque de prendre un peu plus de temps.
+    Au lieu de perdre du temps a faire ca, autant réutiliser un module Angular qui intègre déjà l'API: <a href="https://angular-maps.com/" target="_blank">Angular Google Maps</a>
+  </p>
+  <p>Forts de toutes ces informations, vous etes prets a écrire votre premier composant Angular:</p>
+  <markdown path="./code/component/component.ts"></markdown>
+  <p>Il faut ensuite l'importer et le déclarer dans le module:</p>
+  <markdown path="./code/component/module.ts"></markdown>
+  <p>Enfin, il suffit de faire référence au nouveau tag dans le html</p>
+  <markdown path="./code/component/template.html"></markdown>
+
+  <ihm-section-title title="Création d'un module" url="https://angular.io/api/core/NgModule"></ihm-section-title>
+  <p></p>
+
+  <ihm-section-title title="Création d'un service"></ihm-section-title>
+  <p><a href="https://angular.io/guide/dependency-injection">Dependency injection</a></p>
+  <p><a href="http://reactivex.io/rxjs/manual/overview.html#subject"> RXJS Subjects</a></p>
+
+
+
+  <a href="http://brianflove.com/2016/10/18/angular-2-google-maps-places-autocomplete/">Google places</a>
+
+</div>
+<!-- <markdown path="./code/module.ts"></markdown> -->
+
+<!-- **Let's start coding!
+--Entry point: main.js + index.html
+  --main.js : will bootstrap the application
+  --index.html : will contain all the pages thanks to the routing, magic happens in 'base href="/"'
+
+***Create a "map" component
+--map.component.ts with @component annotation exporting the MapComponent class, map.template.html and map.style.scss under src/app/components/map
+--Import and use it in main module and component (app)
+
+***Create your own module
+--Create a module that will declare and export the map component
+--Import the new module in the main application module
+++Add index.ts files that will export your modules so you don't have to specify the path for each component
+
+***Add basic routing
+--Don't forget <base href="/">
+--Create "Home" page with title
+--Don't forget redirectTo
+--Lazy loading with loadChildren property
+
+***Import and use Bootstrap v4 (beta)
+--Install it using npm CLI
+--Import stylesheet
+++Could import only the files/features we need!
+
+*** -->
