@@ -1,0 +1,1 @@
+@Input() public marker: Marker;

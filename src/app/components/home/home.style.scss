@@ -3,13 +3,32 @@
 :host {
   text-align: left;
   padding: 1.2rem;
+  .example-image {
+    width: 100%;
+    &.right {
+      width: 50%;
+      float: right;
+      margin-left: .2rem;
+    }
+    &.left {
+      width: 50%;
+      float: left;
+      margin-right: .2rem;
+    }
+  }
+  .space-bottom {
+    margin-bottom: 1rem;
+  }
   ::ng-deep .inline {
     p {
       margin-bottom: 0;
       display: inline-block;
     }
   }
-  ::ng-deep pre {
+  ::ng-deep pre, .example-image {
     border: 1px solid $site-primary-color;
+  }
+  h3 {
+    font-size: 1.5rem;
   }
 }

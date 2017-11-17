@@ -16,7 +16,7 @@ import { MapComponent } from './map.component';
     }),
     RouterModule.forChild([
       {path: '', component: MapComponent} //MapComponent to be loaded when navigating to the map path
-    ]),
+    ])
   ],
   exports: [MapComponent]
 })

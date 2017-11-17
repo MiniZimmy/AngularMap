@@ -1,0 +1,15 @@
+<header class="container-fluid">
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid header-content">
+      <ul class="nav navbar-nav container left-header">
+        <li><a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">HOME</a></li>
+        <li><a routerLink="/map" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">MAP</a></li> <!-- Add our new route in the navbar -->
+      </ul>
+      <img src="./images/logo_master.svg" alt="logo" class="main-logo">
+      <ul class="nav navbar-nav container right-header">
+        <li><a href="https://angular.io/" target="_blank">Angular</a></li>
+        <li><a href="https://developers.google.com/maps/documentation/?hl=fr" target="_blank">Google Map API</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
