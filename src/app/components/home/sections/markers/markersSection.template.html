@@ -1,0 +1,59 @@
+<ihm-section-title id="service" title="Marker et Service"></ihm-section-title>
+<p class="inline" Markdown>
+  Cette partie aura pour objectif de créer un service permettant de créer des [marker](https://angular-maps.com/api-docs/agm-core/directives/AgmMarker.html) et de les ajouter sur la carte:
+</p>
+
+<img class="example-image" src="./images/examples/marker.PNG">
+
+<p class="inline" Markdown>
+  Il y a un peu plus de logique a implémenter cette fois. On va séparer le code en plusieurs étapes.
+  Tout d'abord on va simplement créer un composant marker et ajouter un seul marker à la carte qu'on pourra déplacer avec un bouton.
+</p>
+
+<h3>Etape 1</h3>
+<div class="row space-bottom">
+  <div class="col-md-6">
+    <img class="example-image" src="./images/examples/marker1.PNG">
+  </div>
+  <div class="col-md-6">
+    <p class="inline" Markdown>
+      - Ajouter simplement un marker au centre de la carte.
+      - Créer l'interface `IMarker` et la classe `Marker` comme on l'a fait pour les coordonnées.
+      - Créer `MarkerComponent` exporté par `MarkerModule` qui s'occupera du display d'un marker fournit en [input](https://angular.io/api/core/Input): <br>
+      ` @Input() public marker: Marker;` <br>
+      N'oubliez pas d'importer `AgmCoreModule` pour pouvoir bénéficier de la directive `agm-marker` dans le template.
+      - Ajouter le composant dans `MapComponent` (N'oubliez pas d'importer son module)
+    </p>
+  </div>
+</div>
+
+<h3>Etape 2</h3>
+<p class="inline" Markdown>
+  La deuxième étape consiste à créer un service permettant d'ajouter plusieurs markers à la carte.
+</p>
+<div class="row">
+  <div class="col-md-6">
+    <p class="inline" Markdown>
+      - Créer un service Angular qui stockera tous les markers de la carte.
+      `MapComponent` fera appel à ce service pour créer un marker et récupérer tous les markers à afficher.
+      Un service Angular est simplement une classe décorée avec `@Injectable` ([doc](https://angular.io/api/core/Injectable)).
+      N'oubliez pas de le déclarer votre nouveau service dans un module `MarkerServiceModule`.
+      - Pour l'utiliser dans le composant, on utilise l'[injection de dépendance](https://angular.io/guide/dependency-injection-in-action)
+      mise en place par Angular. Enregistrer le `provider` du service permet à Angular de pouvoir mettre une instance de ce service à disposition
+      dans l'application (vous ne ferez jamais de `new ServiceName()`) et de l'injecter dans le constructeur des composants ou services qui en ont besoin.
+      - Boucler sur le tableau de service dans le template pour afficher tous les `marker` créés.
+      Pour boucler sur un tableau coté template avec Angular, vous pouvez utiliser la directive [NgFor](https://angular.io/api/common/NgForOf).
+    </p>
+  </div>
+  <div class="col-md-6">
+    <img class="example-image" src="./images/examples/marker2.PNG">
+  </div>
+</div>
+<h3>Etape 3</h3>
+<p class="inline" Markdown>
+  Enfin, pour obtenir le résultat final, il faut implémenter un nouveau composant fournit par agm.
+  On veut ajouter une fenêtre d'information [AgmInfoWindow](https://angular-maps.com/api-docs/agm-core/components/AgmInfoWindow.html) pour les marqueurs qui va afficher le titre et le label de ces derniers:
+  - Ajouter un titre et un label à la classe `Marker`
+  - Mettre à jour le formulaire pour pouvoir entrer un titre et label en plus des coordonnées.
+  - Ajouter `AgmInfoWindow` au template de `MarkerComponent`.
+</p>

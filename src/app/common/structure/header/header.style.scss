@@ -3,41 +3,42 @@
 :host {
   display: block;
   background-color: $header-background-color;
-  color: white;
-
-  .header-content {
-    display: flex;
-    justify-content: center;
-    img {
-      width: 100px;
-      margin-bottom: -35px;
-    }
-    .left-header, .right-header {
-      flex: 1;
-      flex-direction: row;
+  nav {
+    background-color: $header-background-color;
+    color: white;
+    .header-content {
+      display: flex;
       justify-content: center;
-    }
-  }
-}
-
-.nav {
-  display: flex;
-  justify-content: flex-end;
-  height: 100%;
-
-  & > li {
-    display: flex;
-
-    & > a {
-      color: white;
-      font-weight: 900;
-      border-right: 1px solid gray;
-      padding: .25rem 2rem;
-      &:last-child {
-        border-right: none;
+      img {
+        width: 100px;
+        margin-bottom: -35px;
       }
-      &.active {
-        border-bottom: 2px solid $site-primary-color;
+      .left-header, .right-header {
+        flex: 1;
+        flex-direction: row;
+        justify-content: center;
+      }
+    }
+    .nav {
+      display: flex;
+      justify-content: flex-end;
+      height: 100%;
+
+      & > li {
+        display: flex;
+
+        & > a {
+          color: white;
+          font-weight: 900;
+          border-right: 1px solid gray;
+          padding: .25rem 2rem;
+          &:last-child {
+            border-right: none;
+          }
+          &.active {
+            border-bottom: 2px solid $site-primary-color;
+          }
+        }
       }
     }
   }

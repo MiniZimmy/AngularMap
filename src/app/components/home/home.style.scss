@@ -3,7 +3,28 @@
 :host {
   text-align: left;
   padding: 1.2rem;
-  .example-image {
+  .quick-nav-tab {
+    position: relative;
+    .nav-list {
+      position: fixed;
+      border: 0;
+      border-left: 1px solid #99979c;
+      list-style-type: none;
+      padding-left: 1rem;
+      .nav-list-item {
+        padding: 0;
+        .nav-link {
+          padding: 0;
+          color: #99979c;
+          font-size: .8rem;
+          &:hover {
+            color: $site-secondary-color;
+          }
+        }
+      }
+    }
+  }
+  ::ng-deep .example-image {
     width: 100%;
     &.right {
       width: 50%;
@@ -28,7 +49,7 @@
   ::ng-deep pre, .example-image {
     border: 1px solid $site-primary-color;
   }
-  h3 {
-    font-size: 1.5rem;
+  ::ng-deep h3 {
+    font-size: 1.2rem;
   }
 }

@@ -1,282 +1,50 @@
 <div class="container">
-  <p>
-    L'installation du projet est maintenant finie. Vous voila donc prets à commencer a coder. Le but de ce cours est de vous faire découvrir la magie d'Angular en créant une application utilisant l'API de google afin d'afficher et d'interragir avec une carte.
-  </p>
-  <p>
-    Vous trouverez une liste de liens utiles ainsi que des informations sur l'API de google dans la partie droite du header. Je vous recommande notamment de garder la "Cheat sheet" d'Angular sous le coude pour ce cours. Page très utile qui regroupe les propriétés les plus importantes d'Angular.
-  </p>
-  <p><a href="https://github.com/MiniZimmy/AngularMap/tree/2c79edcc9be5bbaf09ae1b5ba81ed3862b0265a8">Repo at this point</a></p>
-  <ihm-section-title title="Création d'un composant simple" url="https://angular.io/api/core/Component"></ihm-section-title>
-  <p class="inline" Markdown>
-    On va commencer par créer un composant `map` permettant simplement d'afficher la carte obtenue grace aux <a href="https://developers.google.com/maps/documentation/javascript/tutorial" target="_blank">services de Google</a>.
-    On pourrait utiliser directement ces services dans notre application mais l'intégration à Angular pourrait nous demander un travail supplémentaire.
-    Ceci n'étant pas le sujet de ce tutoriel, utilisons directement la librairie <a class="inline"href="https://angular-maps.com/" target="_blank">Angular Maps</a> qui fait le travail pour nous.
-  </p>
-  <p class="inline" Markdown>
-    Avant de commencer à coder, il faut installer cette librairie dans le projet avec npm: `npm install @agm/core --save`.
-    La librairie sera téléchargée et installée dans le dossier `node_modules` avec les autres dépendences.
-  </p>
-  <p>
-    Une fois la librairie installée, il faut importer le module exporté par cette librairie qui contiendra toutes les fonctionnalités et composants qu'elle propose.
-    D'après la documentation, il faut ajouter notre clé Google Maps API à l'import du module:
-  </p>
-  <markdown path="./code/component/module.1.ts"></markdown>
-  <p class="inline" Markdown>
-    On a maintenant accès aux composants et services de `AgmCoreModule` dans ce module.
-    Pour déclarer un composant Angular, on utilise le décorateur `@Component`.
-    Le décorateur est une fonction qui modifie la classe JavaScript pour ajouter des méta-données qui seront utile à Angular pour définir le role de cette classe.
-    Cette fonction accepte plusieurs propriétés en paramètres, les plus importantes sont les suivantes: (cf [doc](https://angular.io/api/core/Component))
-    - `selector`: css selector that identifies this component in a template
-    - `template`/`templateUrl`: Template of the view or url to the template file
-    - `styles`/`styleUrls`: Styles to be applied to the component's view or Urls to the stylesheets
-  </p>
-  <markdown path="./code/component/map.ts"></markdown>
-  <p>Le template: </p>
-  <markdown path="./code/component/map.html"></markdown>
-  <p class="inline" Markdown>
-    Comme la documentation le prescrit, n'oubliez pas de définir une taille pour le composant `agm-map`
-  </p>
-  <markdown path="./code/component/map.scss"></markdown>
-  <p class="inline" Markdown>
-    Maitenant que le composant est créé, il faut le déclarer dans un module pour pouvoir l'utiliser. Pour le moment, on le déclare dans le module principal (`AppModule`), on l'utilisera pour le moment dans le `AppComponent`:
-  </p>
-  <markdown path="./code/component/module.2.ts"></markdown>
-  <p>Enfin, il suffit de faire référence au nouveau tag dans le html</p>
-  <markdown path="./code/component/template.html"></markdown>
-  <p>
-    Une carte centrée sur Toulouse devrait maintenant apparaitre en haut de cette page. Vous venez donc de créer votre premier composant Angular.
-    Les choses les plus importantes à retenir de cette première étape sont ... TODO
-  </p>
-  <p>
-    Pour continuer, nous allons maintenant créer notre propre module qui contiendra notre composant map.
-    On pourrait définir tous nos composants dans le meme module mais du code serait alors nécéssaire pour exporter ce composant dans un autre projet.
-    De plus, nous pouvons ainsi, dans chaque module, choisir les composants que nous voulons ou pas. Si nous avions déclaré tous nos composants
-    dans le meme module, nous serions obligés de tout importer à chaque fois que nous voulons utiliser un composant ou service.
-  </p>
-
-  <ihm-section-title title="Création d'un module" url="https://angular.io/api/core/NgModule"></ihm-section-title>
-  <p class="inline" Markdown>
-    Afin de créer un module Angular (à ne pas confondre avec un module ES6 -- tout fichier qui `export` quelque chose), on va utiliser le décorateur`@NgModule`.
-    Tout comme le décorateur du composant, on peut / doit lui renseigner quelques propriétés pour déclarer notre module.
-    Les plus importantes sont les suivantes: ([doc](https://angular.io/api/core/NgModule))
-    - `declarations`: Classes des composants (Component), directives et filtres (Pipes) déclarée par le module
-    - `imports`: Modules dont dépend le module
-    - `providers`: Services créés par ce module
-    - `exports`: Classes déclarées qui doivent etre visibles par les autres modules
-    - `bootstrap`: Seulement utilisé par le root module, pour définir le root component
-  </p>
-  <p>
-    On profite de ce petit refactoring pour nettoyer un peu notre code.
-    Tous les fichiers sont dans le meme dossier et c'est déjà presque illisible alors qu'il n'y a que deux composants!
-    On utilisera le dossier components qui à déjà été créé pour faire la page que vous etes en train de lire.
-  </p>
-  <p class="inline" Markdown>
-    Apres avoir déplacé nos fichiers `map.*` dans le dossier `map`.
-    On peut déclarer notre nouveau module de la meme facon que le module `AppModule`:
-  </p>
-  <markdown path="./code/module/map.module.ts"></markdown>
-  <p>
-    La déclaration du module est très simple: On déclare les components et pipes de ce module, on importe les modules dont
-    on va avoir besoin et enfin on exporte les composants qui seront utilisés dans les templates des composants qui font partie
-    d'un module qui importe ce module.
-  </p>
-  <p class="inline" Markdown>
-    L'import du module `AgmCoreModule` est utile afin d'utiliser le composant `agm-map`.
-    Celui ci n'étant plus utilisé dans `app.template.html`, on peut donc enlever sont import de `AppModule`.
-    A la place, on peut maintenant importer notre module afin d'utiliser notre nouveau composant dans `app.template.html`.
-  </p>
-  <markdown path="./code/module/app.module.ts"></markdown>
-  <p class="inline" Markdown>
-    Il est bon de remarquer que pour importer le module ES6 `mapModule`, nous avons simplement spécifié le dossier de composants
-    `import {{ '{' }} MapModule {{ '}' }} from './components';`.
-    Ici on veut importer `MapModule` depuis `./component`. La `class` MapModule sera alors cherchée dans `./components/index.ts`,
-    qui quant à lui exporte tout le contenu de `./map/index.ts`, fichier dans lequel la classe `MapModule` est exportée.
-  </p>
-  <p>
-    Cela permet non seulement d'éviter de de devoir spécifier le chemin jusqu'au fichier qui contient la déclaration qui nous intéresse
-    mais aussi de pourvoir regrouper les imports de tous nos futurs composants en une ligne.
-  </p>
-  <p class="inline" Markdown>
-    Maintenant que notre `MapModule` est importé dans le `AppModule`, on peut utiliser `MapComponent` dans le template de `AppComponent`.
-    Il suffit alors de remplacer le composant appelé dans `app.component.html`:
-  </p>
-  <markdown path="./code/module/app.html"></markdown>
-
-  <ihm-section-title title="Angular routing" url="https://angular.io/api/router/RouterModule"></ihm-section-title>
-  <p class="inline" Markdown>
-    Le but de cette section est de créer une nouvelle page "map" dans l'application.
-    Cette page affichera seulement le composant `MapComponent` dans un premier temps.
-    Angular fournit un `RouterModule` pour faciliter l'implémentation de routes dans les applications.
-    Une fois n'est pas coutume, la [documentation](https://angular.io/api/router/RouterModule) est bien faite et détaillée!
-  </p>
-  <p class="inline" Markdown>
-    Dans notre application, les routes sont définies dans le fichier `app.routing.ts`.
-    Comme suggéré par la docmentation (section `How To Use`) on crée et exporte notre module avec la fonction `forRoot` (pour exporter les `directives`, `routes` mais aussi le `router service`),
-    dans laquelle on ajoute notre object de type `Routes`.
-  </p>
-  <markdown path="./code/routing/routing.ts"></markdown>
-  <p class="inline" Markdown>
-    `Routes` est simplement une liste de `Route`. Toutes les propriétés sont détaillées dans la [documentation](https://angular.io/api/router/Routes#description), les étapes principales sont les suivantes:
-    - `path`: Nom de la route (sera utilisé dans l'URL), dans notre cas `map` permettra de créer la route `localhost:xxxx/map`
-    - `component`: Composant à afficher -- eager loading
-    - `loadChildren`: Module a loader -- [lazy loading](https://angular.io/api/router/Routes#lazy-loading)
-    - `pathMatch`: [Matching strategy](https://angular.io/api/router/Routes#matching-strategy)
-    - `redirectTo`: Redirige la path courant sur le path indiqué
-  </p>
-  <p class="inline" Markdown>
-    Dans notre cas, on "lazy load" nos pages. Ce qui veut dire que dans notre cas le `MapModule` ne sera chargé
-    seulement quand la page `map` sera demandée, et non au démarrage de l'application.
-    Cela permet d'éviter les temps de chargements trop longs au démarrage des applications.
-    Si nous avions choisi de loader directement un composant, il aurait fallu importer le module qui exporte ce composant
-    dans le module principal (`AppModule`, ou le routing est défini) et le composant dans le fichier `app.routing.ts` car la propriété
-    `component` attend un object de type `Component`.
-    Avec `loadChildren`, on spécifie seulement le chemin vers le fichier qui définit le fichier à loader ainsi que le nom de ce dernier.
-  </p>
-  <p class="inline" Markdown>
-    Une fois notre nouvelle route créée, il ne faut pas oublier d'ajouter dans les modules "lazy loadé" (ici `map.module.ts`)
-    la composant à créer quand on "navigue" vers cette route.
-  </p>
-  <markdown path="./code/routing/map.module.ts"></markdown>
-  <p class="inline" Markdown>
-    Enfin, il faut ajouter un lien vers cette nouvelle route dans le template de notre composant `HeaderComponent`.
-  </p>
-  <markdown path="./code/routing/header.html"></markdown>
-
-  <ihm-section-title title="Data binding"></ihm-section-title>
-  <p>
-    Notre carte n'affiche pour le moment que notre carte, dans cette section, nous allons ajouter un formulaire
-    qui permettra de centrer la carte sur des coordonnées données:
-  </p>
-  <img class="example-image" src="./images/examples/center.PNG"/>
-  <p class="inline" Markdown>
-    Tout d'abord, nous allons souvent utiliser des coordonnées (latitude, longitude), autant utiliser les fonctionnalités de
-    TypeScript et créer une interface et une classe pour les coordonnées. On regroupera les classes dont on a besoin dans `src/app/models`.
-  </p>
-  <markdown path="./code/dataBinding/coordinates.ts"></markdown>
-  <p class="inline" Markdown>
-    Comme le nom de la partie l'indique, nous allons utiliser la directive `NgModel` du package `@angular/form` pour le formulaire.
-  </p>
-  <p class="inline" Markdown>
-    Il est maintenant temps d'écrire le code par vous même. Les étapes à suivre sont les suivantes:
-    - Importer et utiliser `ICoordinates` dans `MapComponent`
-    - Importer le module permettant d'utiliser `NgModel`
-    - Mettre à jour le template de `MapComponent` pour y ajouter le block "Centrer la carte" sur la gauche
-    - Utiliser le `two-way data binding` et `ngModelOptions` pour mettre à jour le centre de la carte seulement
-    quand on quitte un des `input` (`blur` event)
-  </p>
-  <p class="inline" Markdown>
-    Une fois la partie précédente finie, la carte devrait se re-centrer quand la latitude et longitude sont modifiées.
-    En revanche, ces dernieres ne sont pas modifiées le centre de la map est déplacé à l'aide du "drag-n-drop".
-  </p>
-  <p class="inline" Markdown>
-    On a jusqu'ici profité des `inputs` du composant `agm-map` (`latitude` et `longitude`), pour mettre à
-    jour les coordonnées de notre composants quand le centre change, on va devoir utiliser l'évènement `centerChange`.
-    Il faut associer une fonction à cet évènement qui mettra à jour les coordonnées du centre de la carte.
-    Cette fonction prendra l'`event` de [LatLngLiteral](https://angular-maps.com/api-docs/agm-core/interfaces/LatLngLiteral.html)
-  </p>
-  <h3>Bonus</h3>
-  <p class="inline" Markdown>
-    Pour le moment, on entre des coordonnées arbitraires au lancement de l'application.
-    Une petite amélioration serait de centrer la carte sur votre emplacement actuel. Pour cela, on peut utiliser le service
-    `geolocation` du navigateur. Le code de la méthode est le suivant, à vous de l'ajouter à l'instanciation du composant.
-  </p>
-  <markdown path="./code/dataBinding/geolocation.ts"></markdown>
-
-  <ihm-section-title title="Marker et Service"></ihm-section-title>
-  <p class="inline" Markdown>
-    Cette partie aura pour objectif de créer un service permettant de créer des [marker](https://angular-maps.com/api-docs/agm-core/directives/AgmMarker.html) et de les ajouter sur la carte:
-  </p>
-
-  <img class="example-image" src="./images/examples/marker.PNG">
-
-  <p class="inline" Markdown>
-    Il y a un peu plus de logique a implémenter cette fois. On va séparer le code en plusieurs étapes.
-    Tout d'abord on va simplement créer un composant marker et ajouter un seul marker à la carte qu'on pourra déplacer avec un bouton.
-  </p>
-
-  <h3>Etape 1</h3>
-  <div class="row space-bottom">
-    <div class="col-md-6">
-      <img class="example-image" src="./images/examples/marker1.PNG">
-    </div>
-    <div class="col-md-6">
-      <p class="inline" Markdown>
-        - Ajouter simplement un marker au centre de la carte.
-        - Créer l'interface `IMarker` et la classe `Marker` comme on l'a fait pour les coordonnées.
-        - Créer `MarkerComponent` exporté par `MarkerModule` qui s'occupera du display d'un marker fournit en [input](https://angular.io/api/core/Input): <br>
-        ` @Input() public marker: Marker;` <br>
-        N'oubliez pas d'importer `AgmCoreModule` pour pouvoir bénéficier de la directive `agm-marker` dans le template.
-        - Ajouter le composant dans `MapComponent` (N'oubliez pas d'importer son module)
-      </p>
-    </div>
-  </div>
-
-  <h3>Etape 2</h3>
-  <p class="inline" Markdown>
-    La deuxième étape consiste à créer un service permettant d'ajouter plusieurs markers à la carte.
-  </p>
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-1 order-2 quick-nav-tab">
+      <ul class="nav-list">
+        <li class="nav-list-item"><a class="nav-link" href="home#component">Création d'un composant simple</a></li>
+        <li class="nav-list-item"><a class="nav-link" href="home#module">Création d'un module</a></li>
+        <li class="nav-list-item"><a class="nav-link" href="home#routing">Routing</a></li>
+        <li class="nav-list-item"><a class="nav-link" href="home#dataBinding">Data Binding</a></li>
+        <li class="nav-list-item"><a class="nav-link" href="home#service">Marker et service</a></li>
+        <li class="nav-list-item"><a class="nav-link" href="home#googlePlaces">Google Places</a></li>
+      </ul>
+    </div>
+    <div class="course-content col-md-11 order-1">
+      <p>
+        L'installation du projet est maintenant finie. Vous voila donc prets à commencer a coder. Le but de ce cours est de vous faire découvrir la magie d'Angular en créant une application utilisant l'API de google afin d'afficher et d'interragir avec une carte.
+      </p>
+      <p>
+        Vous trouverez une liste de liens utiles ainsi que des informations sur l'API de google dans la partie droite du header. Je vous recommande notamment de garder la "Cheat sheet" d'Angular sous le coude pour ce cours. Page très utile qui regroupe les propriétés les plus importantes d'Angular.
+      </p>
+
+      <p><a href="https://github.com/MiniZimmy/AngularMap/tree/2c79edcc9be5bbaf09ae1b5ba81ed3862b0265a8">Repo at this point</a></p>
+
+      <component-section></component-section>
+
+      <module-section></module-section>
+
+      <routing-section></routing-section>
+
+      <data-binding-section></data-binding-section>
+
+      <markers-section></markers-section>
+
+      <places-section></places-section>
+
+      <ihm-section-title id="last" title="Pour les plus rapides"></ihm-section-title>
+      <p>
+        Il reste encore beaucoup de features a implémenter et vous avez maintenant toutes les cartes en mains pour le faire.
+        Par exemple, il est pour le moment possible de créer des marqueurs mais nous n'avons aucun moyen de les gérer.
+        Une idée d'amélioration serait d'afficher une liste de tous nos marqueurs pour pouvoir les modifier, les supprimer ... <br>
+        Il reste aussi énormément de services fournis par Google qui permettent de jouer avec les cartes, découvrez les!
+      </p>
+
+      <ihm-section-title id="last" title="Pour aller plus loin"></ihm-section-title>
       <p class="inline" Markdown>
-        - Créer un service Angular qui stockera tous les markers de la carte.
-        `MapComponent` fera appel à ce service pour créer un marker et récupérer tous les markers à afficher.
-        Un service Angular est simplement une classe décorée avec `@Injectable` ([doc](https://angular.io/api/core/Injectable)).
-        N'oubliez pas de le déclarer votre nouveau service dans un module `MarkerServiceModule`.
-        - Pour l'utiliser dans le composant, on utilise l'[injection de dépendance](https://angular.io/guide/dependency-injection-in-action)
-        mise en place par Angular. Enregistrer le `provider` du service permet à Angular de pouvoir mettre une instance de ce service à disposition
-        dans l'application (vous ne ferez jamais de `new ServiceName()`) et de l'injecter dans le constructeur des composants ou services qui en ont besoin.
-        - Boucler sur le tableau de service dans le template pour afficher tous les `marker` créés.
-        Pour boucler sur un tableau coté template avec Angular, vous pouvez utiliser la directive [NgFor](https://angular.io/api/common/NgForOf).
+        Il reste encore bien des choses à découvrir dans Angular et RxJS. Pour en voir une petite partie avec cette application,
+        on peut mettre en place un [Store](https://github.com/ngrx/store) qui contiendrait nos marqueurs et places à afficher.
       </p>
     </div>
-    <div class="col-md-6">
-      <img class="example-image" src="./images/examples/marker2.PNG">
-    </div>
   </div>
-  <h3>Etape 3</h3>
-  <p class="inline" Markdown>
-    Enfin, pour obtenir le résultat final, il faut implémenter un nouveau composant fournit par agm.
-    On veut ajouter une fenêtre d'information [AgmInfoWindow](https://angular-maps.com/api-docs/agm-core/components/AgmInfoWindow.html) pour les marqueurs qui va afficher le titre et le label de ces derniers:
-    - Ajouter un titre et un label à la classe `Marker`
-    - Mettre à jour le formulaire pour pouvoir entrer un titre et label en plus des coordonnées.
-    - Ajouter `AgmInfoWindow` au template de `MarkerComponent`.
-  </p>
-
-  <ihm-section-title title="Google places"></ihm-section-title>
-  <p class="inline" Markdown>
-    Le but de cette partie est d'utiliser la librairie [Google Places API](https://developers.google.com/places/javascript) pour chercher un lieu et l'afficher sur la carte avec une photo.
-  </p>
-
-  <p><a href="http://reactivex.io/rxjs/manual/overview.html#subject"> RXJS Subjects</a></p>
-
-  <a href="http://brianflove.com/2016/10/18/angular-2-google-maps-places-autocomplete/">Google places</a>
-
 </div>
-<!-- <markdown path="./code/module.ts"></markdown> -->
-
-<!-- **Let's start coding!
---Entry point: main.js + index.html
-  --main.js : will bootstrap the application
-  --index.html : will contain all the pages thanks to the routing, magic happens in 'base href="/"'
-
-***Create a "map" component
---map.component.ts with @component annotation exporting the MapComponent class, map.template.html and map.style.scss under src/app/components/map
---Import and use it in main module and component (app)
-
-***Create your own module
---Create a module that will declare and export the map component
---Import the new module in the main application module
-++Add index.ts files that will export your modules so you don't have to specify the path for each component
-
-***Add basic routing
---Don't forget <base href="/">
---Create "Home" page with title
---Don't forget redirectTo
---Lazy loading with loadChildren property
-
-***Import and use Bootstrap v4 (beta)
---Install it using npm CLI
---Import stylesheet
-++Could import only the files/features we need!
-
-*** -->

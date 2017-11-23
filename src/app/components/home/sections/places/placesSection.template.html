@@ -1,0 +1,68 @@
+<ihm-section-title id="googlePlaces" title="Google places"></ihm-section-title>
+<p class="inline" Markdown>
+  Le but de cette partie est d'utiliser la librairie [Google Places API](https://developers.google.com/places/javascript) pour chercher un lieu et l'afficher sur la carte avec une photo.
+  Encore une fois, on va adapter le code fournit dans la documentation à notre application Angular et continuer à utiliser au maximum `@agm`.
+  La documentation ne précise pas directement comment gérer les librairies mais en creusant un peu le code, on trouve le service [MapsAPILoader](https://github.com/SebastianM/angular-google-maps/blob/master/packages/core/services/maps-api-loader/lazy-maps-api-loader.ts)
+  qui permet de charger des librairies définies à la définition du module (dans `this._config.libraries`). La fonction `load` permet en effet de charger la libraire comme l'indique l'[example de google](https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete): <br>
+  `src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=YOUR_LIBRARY&callback=angular2GoogleMapsLazyMapsAPILoader"`
+</p>
+<p class="inline" Markdown>
+  On ajoute donc la librairie `places` pour charger ce script: <br> `maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=angular2GoogleMapsLazyMapsAPILoader`
+</p>
+<markdown path="./code/places/import.ts"></markdown>
+<h3>Etape 1: Quick and dirty - Avec ElementRef</h3>
+<p class="inline" Markdown>
+  Dans l'example de Google, on voit que la fonction [autocomplete](https://developers.google.com/maps/documentation/javascript/3.exp/reference#Autocomplete) prend le DOM element `input` en paramètre.
+  Pour faire référence à l'élément avec Angular, vous utiliserez le décorateur [ViewChild](https://angular.io/api/core/ViewChild) pour obtenir un [ElementRef](https://angular.io/api/core/ElementRef): <br>
+  `@ViewChild('search') public searchElementRef: ElementRef;` <br>
+  `ElementRef.nativeElement` correspond au DOM élément tel qu'`input` dans l'éxemple de Google.
+</p>
+<img class="example-image" src="./images/examples/places.PNG"/>
+<p class="inline" Markdown>
+  Dans un premier temps, commencez par implémenter l'autocomplete et l'affichage du marqueur quand on clique sur le bouton "Afficher" en suivant les étapes suivantes:
+  - Créer un nouveau module `PlacesModule` qui contiendra le nouveau formulaire "Recherche de lieu"
+  - Implémenter l'autocomplete comme indiqué ci-dessus.
+</p>
+<p class="inline" Markdown>
+  Maintenant que la recherche de lieu marche comme il faut, ajoutez l'image aux marqueur.
+  La fonction [getDetails](https://developers.google.com/maps/documentation/javascript/3.exp/reference#PlacesService) vous permettra d'obtenir l'image qui correspond à chaque lieu. <br>
+  [Exemple d'implémentation](https://developers.google.com/maps/documentation/javascript/examples/place-details).
+</p>
+
+<h3>Etape 2: Sans ElementRef - Avec RxJS</h3>
+<p class="inline" Markdown>
+  Comme l'indique la doc d'Angular, l'utilisation d'`ElementRef` est fortement déconseillée,
+  ce qui implique que nous ne pouvons pas utiliser la fonction `autocomplete` ici. Nous allons alors utiliser l'[AutocompleteService](https://developers.google.com/maps/documentation/javascript/3.exp/reference#AutocompleteService).
+  La fonction `getQueryPredictions` de ce service nous permettra de récupérer des prédictions en fonction d'une recherche en `input`.
+  <br>
+  Cette partie est inspirée de [cette partie](https://angular.io/tutorial/toh-pt6#fix-the-herosearchcomponent-class) tutoriel d'Angular et utilisera des services et composants de la librairie [RxJS5](https://github.com/ReactiveX/rxjs).
+  Il serait bien trop long de faire une partie complète sur RxJS mais on verra ici quelques unes des fonctionnalités les plus utiles telles que:
+  - [Observable](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html)
+  - [Subject](http://reactivex.io/rxjs/class/es6/Subject.js~Subject.html): `Observable` et `Observer`
+  - `Pipe`
+  - Quelques fonctions des `Observables` telles que `debounceTime`, `distinctUntilChanged`, `switchMap`, `bindCallback`.
+  Le `Subject` sera utilisé pour "écouter" les entrées de l'utilisateur de la facon suivante:
+  <br><br>
+</p>
+<markdown path="./code/places/subject.ts"></markdown>
+<p class="inline" Markdown>
+  La fonction `search` sera appelée sur l'évenement `(keyup)` de l'`input` pour mettre à jour le `Subject` à chaque fois que l'utilisateur
+  tape sur une touche du clavier:
+</p>
+<markdown path="./code/places/subjectTemplate.html"></markdown>
+<p class="inline" Markdown>
+  Il faudra ensuite, à chaque fois que le `Subject` est mis à jour, appeler les fonctions `debounceTime` (pour ne pas envoyer trop de requètes),
+  `distinctUntilChanged` (pour ne pas lancer deux fois la même requête) puis `switchMap` (pour renvoyer un observable qui contiendra les prédictions).
+</p>
+<p class="inline" Markdown>
+  La fonction `getQueryPredictions` ne retourne pas un `Observable`, elle ne retourne même rien du tout: Elle prend une fonction `callback`
+  en paramètre qui sera appelée avec le résultat et le statut de la requète (de facon asynchrone). <br>
+  La fonction `bindCallback` permet de créer un `Observable` è partir de ce `callback`.
+</p>
+<p class="inline" Markdown>
+  Il est impossible d'afficher un observable tel quel dans le template, il vous faudra utiliser le [AsyncPipe])(https://angular.io/api/common/AsyncPipe)
+  d'Angular pour récupérer les valeurs de l'observable.
+</p>
+<p>
+  Good luck and have fun!
+</p>

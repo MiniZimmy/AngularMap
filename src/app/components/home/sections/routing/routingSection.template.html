@@ -1,0 +1,42 @@
+<ihm-section-title id="routing" title="Angular routing" url="https://angular.io/api/router/RouterModule"></ihm-section-title>
+<p class="inline" Markdown>
+  Le but de cette section est de créer une nouvelle page "map" dans l'application.
+  Cette page affichera seulement le composant `MapComponent` dans un premier temps.
+  Angular fournit un `RouterModule` pour faciliter l'implémentation de routes dans les applications.
+  Une fois n'est pas coutume, la [documentation](https://angular.io/api/router/RouterModule) est bien faite et détaillée!
+</p>
+<p class="inline" Markdown>
+  Dans notre application, les routes sont définies dans le fichier `app.routing.ts`.
+  Comme suggéré par la docmentation (section `How To Use`) on crée et exporte notre module avec la fonction `forRoot` (pour exporter les `directives`, `routes` mais aussi le `router service`),
+  dans laquelle on ajoute notre object de type `Routes`.
+</p>
+<app-code-tab fileName="app.routing.ts" filePath="./code/routing/routing.ts" ></app-code-tab>
+<!-- <markdown path="./code/routing/routing.ts"></markdown> -->
+<p class="inline" Markdown>
+  `Routes` est simplement une liste de `Route`. Toutes les propriétés sont détaillées dans la [documentation](https://angular.io/api/router/Routes#description), les étapes principales sont les suivantes:
+  - `path`: Nom de la route (sera utilisé dans l'URL), dans notre cas `map` permettra de créer la route `localhost:xxxx/map`
+  - `component`: Composant à afficher -- eager loading
+  - `loadChildren`: Module a loader -- [lazy loading](https://angular.io/api/router/Routes#lazy-loading)
+  - `pathMatch`: [Matching strategy](https://angular.io/api/router/Routes#matching-strategy)
+  - `redirectTo`: Redirige la path courant sur le path indiqué
+</p>
+<p class="inline" Markdown>
+  Dans notre cas, on "lazy load" nos pages. Ce qui veut dire que dans notre cas le `MapModule` ne sera chargé
+  seulement quand la page `map` sera demandée, et non au démarrage de l'application.
+  Cela permet d'éviter les temps de chargements trop longs au démarrage des applications.
+  Si nous avions choisi de loader directement un composant, il aurait fallu importer le module qui exporte ce composant
+  dans le module principal (`AppModule`, ou le routing est défini) et le composant dans le fichier `app.routing.ts` car la propriété
+  `component` attend un object de type `Component`.
+  Avec `loadChildren`, on spécifie seulement le chemin vers le fichier qui définit le fichier à loader ainsi que le nom de ce dernier.
+</p>
+<p class="inline" Markdown>
+  Une fois notre nouvelle route créée, il ne faut pas oublier d'ajouter dans les modules "lazy loadé" (ici `map.module.ts`)
+  la composant à créer quand on "navigue" vers cette route.
+</p>
+<app-code-tab fileName="map/map.module.ts" filePath="./code/routing/map.module.ts" ></app-code-tab>
+<!-- <markdown path="./code/routing/map.module.ts"></markdown> -->
+<p class="inline" Markdown>
+  Enfin, il faut ajouter un lien vers cette nouvelle route dans le template de notre composant `HeaderComponent`.
+</p>
+<app-code-tab fileName="header.html" filePath="./code/routing/header.html" ></app-code-tab>
+<!-- <markdown path="./code/routing/header.html"></markdown> -->

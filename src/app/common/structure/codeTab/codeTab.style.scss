@@ -1,0 +1,15 @@
+.title-tab {
+  background: #1565C0;
+  border-radius: 10px 10px 0 0;
+  color: white;
+  padding: .4rem;
+  .title {
+    margin-left: 1rem;
+  }
+}
+:host {
+  ::ng-deep pre {
+    border-top: 0 !important;
+    margin-top: 0 !important;
+  }
+}

@@ -1,0 +1,40 @@
+<ihm-section-title id="dataBinding" title="Data binding"></ihm-section-title>
+<p>
+  Notre carte n'affiche pour le moment que notre carte, dans cette section, nous allons ajouter un formulaire
+  qui permettra de centrer la carte sur des coordonnées données:
+</p>
+<img class="example-image" src="./images/examples/center.PNG"/>
+<p class="inline" Markdown>
+  Tout d'abord, nous allons souvent utiliser des coordonnées (latitude, longitude), autant utiliser les fonctionnalités de
+  TypeScript et créer une interface et une classe pour les coordonnées. On regroupera les classes dont on a besoin dans `src/app/models`.
+</p>
+<app-code-tab fileName="models/coordinates.ts" filePath="./code/dataBinding/coordinates.ts" ></app-code-tab>
+<!-- <markdown path="./code/dataBinding/coordinates.ts"></markdown> -->
+<p class="inline" Markdown>
+  Comme le nom de la partie l'indique, nous allons utiliser la directive `NgModel` du package `@angular/form` pour le formulaire.
+</p>
+<p class="inline" Markdown>
+  Il est maintenant temps d'écrire le code par vous même. Les étapes à suivre sont les suivantes:
+  - Importer et utiliser `ICoordinates` dans `MapComponent`
+  - Importer le module permettant d'utiliser `NgModel`
+  - Mettre à jour le template de `MapComponent` pour y ajouter le block "Centrer la carte" sur la gauche
+  - Utiliser le `two-way data binding` et `ngModelOptions` pour mettre à jour le centre de la carte seulement
+  quand on quitte un des `input` (`blur` event)
+</p>
+<p class="inline" Markdown>
+  Une fois la partie précédente finie, la carte devrait se re-centrer quand la latitude et longitude sont modifiées.
+  En revanche, ces dernieres ne sont pas modifiées le centre de la map est déplacé à l'aide du "drag-n-drop".
+</p>
+<p class="inline" Markdown>
+  On a jusqu'ici profité des `inputs` du composant `agm-map` (`latitude` et `longitude`), pour mettre à
+  jour les coordonnées de notre composants quand le centre change, on va devoir utiliser l'évènement `centerChange`.
+  Il faut associer une fonction à cet évènement qui mettra à jour les coordonnées du centre de la carte.
+  Cette fonction prendra l'`event` de [LatLngLiteral](https://angular-maps.com/api-docs/agm-core/interfaces/LatLngLiteral.html)
+</p>
+<h3>Bonus</h3>
+<p class="inline" Markdown>
+  Pour le moment, on entre des coordonnées arbitraires au lancement de l'application.
+  Une petite amélioration serait de centrer la carte sur votre emplacement actuel. Pour cela, on peut utiliser le service
+  `geolocation` du navigateur. Le code de la méthode est le suivant, à vous de l'ajouter à l'instanciation du composant.
+</p>
+<markdown path="./code/dataBinding/geolocation.ts"></markdown>
