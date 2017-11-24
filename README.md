@@ -2,8 +2,8 @@
 
 ## Requirements
 Please set up your environment before starting:
-- Node: https://nodejs.org/en/download/ (v6.9.x)
-- Npm: https://www.npmjs.com/get-npm (v3.x.x)
+- Node: https://nodejs.org/en/download/ (v6.9.x +)
+- Npm: https://www.npmjs.com/get-npm (v3.x.x +)
 - @angular/cli: npm install -g @angular/cli
 
 
