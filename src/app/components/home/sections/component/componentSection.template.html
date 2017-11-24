@@ -1,54 +1,63 @@
 <ihm-section-title id="component" title="Création d'un composant simple" url="https://angular.io/api/core/Component"></ihm-section-title>
 <p class="inline" Markdown>
-  On va commencer par créer un composant `map` permettant simplement d'afficher la carte obtenue grace aux <a href="https://developers.google.com/maps/documentation/javascript/tutorial" target="_blank">services de Google</a>.
-  On pourrait utiliser directement ces services dans notre application mais l'intégration à Angular pourrait nous demander un travail supplémentaire.
-  Ceci n'étant pas le sujet de ce tutoriel, utilisons directement la librairie <a class="inline"href="https://angular-maps.com/" target="_blank">Angular Maps</a> qui fait le travail pour nous.
+  On va commencer par créer un composant `map` permettant simplement d'afficher la carte obtenue grâce aux <a href="https://developers.google.com/maps/documentation/javascript/tutorial" target="_blank">services de Google</a>.
+  On pourrait utiliser directement ces services dans notre application mais l'intégration avec Angular pourrait nous demander un travail supplémentaire.
+  Ceci n'étant pas le sujet de ce tutoriel, utilisons directement la librairie <a class="inline"href="https://angular-maps.com/" target="_blank">Angular Maps</a> qui fait le travail pour nous et qui nous permettra de voir l'installation et importation de modules externes.
 </p>
 <p class="inline" Markdown>
-  Avant de commencer à coder, il faut installer cette librairie dans le projet avec npm: `npm install @agm/core --save`.
-  La librairie sera téléchargée et installée dans le dossier `node_modules` avec les autres dépendences.
+  Pour pouvoir l'utiliser, il faut installer cette librairie dans le projet avec npm: `npm install @agm/core --save`.
+  La librairie sera téléchargée et installée dans le dossier `node_modules` avec les autres dépendences et automatiquement ajoutée à la liste de dépendances
+  dans le `package.json` (grâce au `--save`).
 </p>
 <p>
   Une fois la librairie installée, il faut importer le module exporté par cette librairie qui contiendra toutes les fonctionnalités et composants qu'elle propose.
   D'après la documentation, il faut ajouter notre clé Google Maps API à l'import du module:
 </p>
 <app-code-tab fileName="app.module.ts" filePath="./code/component/module.1.ts" ></app-code-tab>
-<!-- <markdown path="./code/component/module.1.ts"></markdown> -->
+
 <p class="inline" Markdown>
   On a maintenant accès aux composants et services de `AgmCoreModule` dans ce module.
   Pour déclarer un composant Angular, on utilise le décorateur `@Component`.
-  Le décorateur est une fonction qui modifie la classe JavaScript pour ajouter des méta-données qui seront utile à Angular pour définir le role de cette classe.
+  Le décorateur est une fonction qui modifie la classe JavaScript pour ajouter des méta-données qui seront utile à Angular pour définir le rôle de cette classe.
   Cette fonction accepte plusieurs propriétés en paramètres, les plus importantes sont les suivantes: (cf [doc](https://angular.io/api/core/Component))
   - `selector`: css selector that identifies this component in a template
   - `template`/`templateUrl`: Template of the view or url to the template file
   - `styles`/`styleUrls`: Styles to be applied to the component's view or Urls to the stylesheets
 </p>
-<!-- <markdown path="./code/component/map.ts"></markdown> -->
 <app-code-tab fileName="map.component.ts" filePath="./code/component/map.ts" ></app-code-tab>
 
 <p>Le template: </p>
-<!-- <markdown path="./code/component/map.html"></markdown>  -->
 <app-code-tab fileName="map.template.html" filePath="./code/component/map.html" ></app-code-tab>
-
+<p class="inline" Markdown>
+  Ici, on voit l'apparition de nouveaux éléments dans le template. En effet, on ajoute au `component` `agm-map` des `input` latitude et longitude.
+  `agm-map` utilisera ces coordonnées pour centrer la carte, mais pourquoi utiliser les []? <br>
+  La [Cheat sheet](https://angular.io/guide/cheatsheet) peut nous éclairer sur ce sujet (première ligne de `Template syntax`):
+  Les crochets permettent de lier les attributs latitude et longitude aux variables latitude et longitude définies dans le composant (`MapComponent` ici).
+  Quand leurs valeurs changeront dans le composant, la valeur sera mise à jour dans son template. <br>
+  C'est un des avantages d'Angular: Le binding de valeurs entre le composant et son template!
+</p>
 <p class="inline" Markdown>
   Comme la documentation le prescrit, n'oubliez pas de définir une taille pour le composant `agm-map`
 </p>
-<!-- <markdown path="./code/component/map.scss"></markdown> -->
 <app-code-tab fileName="map.style.scss" filePath="./code/component/map.scss" ></app-code-tab>
 
 <p class="inline" Markdown>
-  Maitenant que le composant est créé, il faut le déclarer dans un module pour pouvoir l'utiliser. Pour le moment, on le déclare dans le module principal (`AppModule`), on l'utilisera pour le moment dans le `AppComponent`:
+  Maitenant que le composant est créé, il faut le déclarer dans un module pour pouvoir l'utiliser.
+  Pour le moment, on le déclare dans le module principal (`AppModule`), on l'utilisera dans un premier temps dans le `AppComponent`:
 </p>
-<!-- <markdown path="./code/component/module.2.ts"></markdown> -->
 <app-code-tab fileName="app.module.ts" filePath="./code/component/module.2.ts" ></app-code-tab>
 
 <p>Enfin, il suffit de faire référence au nouveau tag dans le html</p>
-<!-- <markdown path="./code/component/template.html"></markdown> -->
 <app-code-tab fileName="app.component.html" filePath="./code/component/template.html" ></app-code-tab>
 
-<p>
+<p class="inline" Markdown>
   Une carte centrée sur Toulouse devrait maintenant apparaitre en haut de cette page. Vous venez donc de créer votre premier composant Angular.
-  Les choses les plus importantes à retenir de cette première étape sont ... TODO
+  Les choses les plus importantes à retenir de cette première étape les suivantes:
+  - L'installation d'une nouvelle dépendance
+  - L'import du module dans notre application
+  - L'utilisation d'un composant exporté par un module externe
+  - Le `binding` avec le template
+  - Utilisation de l'interface [OnInit](https://angular.io/api/core/OnInit) pour initialiser notre composant avec des coordonnées.
 </p>
 <p>
   Pour continuer, nous allons maintenant créer notre propre module qui contiendra notre composant map.

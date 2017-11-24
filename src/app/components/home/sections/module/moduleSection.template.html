@@ -9,29 +9,27 @@
   - `exports`: Classes déclarées qui doivent etre visibles par les autres modules
   - `bootstrap`: Seulement utilisé par le root module, pour définir le root component
 </p>
-<p>
+<p class="inline" Markdown>
   On profite de ce petit refactoring pour nettoyer un peu notre code.
   Tous les fichiers sont dans le meme dossier et c'est déjà presque illisible alors qu'il n'y a que deux composants!
-  On utilisera le dossier components qui à déjà été créé pour faire la page que vous etes en train de lire.
+  On utilisera le dossier components qui à déjà été créé pour faire la `Home` page.
 </p>
 <p class="inline" Markdown>
   Apres avoir déplacé nos fichiers `map.*` dans le dossier `map`.
   On peut déclarer notre nouveau module de la meme facon que le module `AppModule`:
 </p>
 <app-code-tab fileName="component/map/map.module.ts" filePath="./code/module/map.module.ts" ></app-code-tab>
-<!-- <markdown path="./code/module/map.module.ts"></markdown> -->
 <p>
   La déclaration du module est très simple: On déclare les components de ce module, on importe les modules dont
   on va avoir besoin et enfin on exporte les composants qui seront utilisés dans les templates des composants qui font partie
   d'un module qui importe ce module.
 </p>
 <p class="inline" Markdown>
-  L'import du module `AgmCoreModule` est utile afin d'utiliser le composant `agm-map`.
-  Celui ci n'étant plus utilisé dans `app.template.html`, on peut donc enlever sont import de `AppModule`.
+  L'import du module `AgmCoreModule` est importé afin d'utiliser le composant `agm-map`.
+  Celui ci n'étant plus utilisé dans `app.template.html`, on peut donc enlever son import de `AppModule`.
   A la place, on peut maintenant importer notre module afin d'utiliser notre nouveau composant dans `app.template.html`.
 </p>
 <app-code-tab fileName="app.module.ts" filePath="./code/module/app.module.ts" ></app-code-tab>
-<!-- <markdown path="./code/module/app.module.ts"></markdown> -->
 <p class="inline" Markdown>
   Il est bon de remarquer que pour importer le module ES6 `mapModule`, nous avons simplement spécifié le dossier de composants
   `import {{ '{' }} MapModule {{ '}' }} from './components';`.
@@ -47,4 +45,9 @@
   Il suffit alors de remplacer le composant appelé dans `app.component.html`:
 </p>
 <app-code-tab fileName="app.component.html" filePath="./code/module/app.html" ></app-code-tab>
-<!-- <markdown path="./code/module/app.html"></markdown> -->
+<p class="inline" Markdown>
+  Points clés de cette partie:
+  - Création d'un module: Comme pour component, on utilise un [decorator](https://angular.io/api/core/NgModule) (`@...()`)
+  - Déclaration et export de nos composants
+  - Import de notre module pour l'utiliser dans un autre module
+</p>

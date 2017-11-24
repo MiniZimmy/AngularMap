@@ -11,7 +11,6 @@
   dans laquelle on ajoute notre object de type `Routes`.
 </p>
 <app-code-tab fileName="app.routing.ts" filePath="./code/routing/routing.ts" ></app-code-tab>
-<!-- <markdown path="./code/routing/routing.ts"></markdown> -->
 <p class="inline" Markdown>
   `Routes` est simplement une liste de `Route`. Toutes les propriétés sont détaillées dans la [documentation](https://angular.io/api/router/Routes#description), les étapes principales sont les suivantes:
   - `path`: Nom de la route (sera utilisé dans l'URL), dans notre cas `map` permettra de créer la route `localhost:xxxx/map`
@@ -27,16 +26,20 @@
   Si nous avions choisi de loader directement un composant, il aurait fallu importer le module qui exporte ce composant
   dans le module principal (`AppModule`, ou le routing est défini) et le composant dans le fichier `app.routing.ts` car la propriété
   `component` attend un object de type `Component`.
-  Avec `loadChildren`, on spécifie seulement le chemin vers le fichier qui définit le fichier à loader ainsi que le nom de ce dernier.
+  La propriété `loadChildren` nous permet de spécifier seulement le chemin vers le fichier qui définit le fichier à loader ainsi que le nom de ce dernier.
 </p>
 <p class="inline" Markdown>
   Une fois notre nouvelle route créée, il ne faut pas oublier d'ajouter dans les modules "lazy loadé" (ici `map.module.ts`)
-  la composant à créer quand on "navigue" vers cette route.
+  le composant à créer quand on "navigue" vers cette route.
 </p>
 <app-code-tab fileName="map/map.module.ts" filePath="./code/routing/map.module.ts" ></app-code-tab>
-<!-- <markdown path="./code/routing/map.module.ts"></markdown> -->
 <p class="inline" Markdown>
   Enfin, il faut ajouter un lien vers cette nouvelle route dans le template de notre composant `HeaderComponent`.
 </p>
 <app-code-tab fileName="header.html" filePath="./code/routing/header.html" ></app-code-tab>
-<!-- <markdown path="./code/routing/header.html"></markdown> -->
+<p class="inline" Markdown>
+  Les points clés de cette partie:
+  - Le `RouterModule`.
+  - Le `lazy load`: Utilisation de `LoadChildren` et non `component` et déclaration du composant déléguée dans le module lazy loadé
+  - Les directives `routerLink*` pour faciliter la création de composants de navigation
+</p>

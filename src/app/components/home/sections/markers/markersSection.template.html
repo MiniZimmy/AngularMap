@@ -22,10 +22,11 @@
       - Créer `MarkerComponent` exporté par `MarkerModule` qui s'occupera du display d'un marker fournit en [input](https://angular.io/api/core/Input): <br>
       ` @Input() public marker: Marker;` <br>
       N'oubliez pas d'importer `AgmCoreModule` pour pouvoir bénéficier de la directive `agm-marker` dans le template.
-      - Ajouter le composant dans `MapComponent` (N'oubliez pas d'importer son module)
+      - Ajouter `MarkerComponent` dans `MapComponent` (N'oubliez pas l'import dans le module).
     </p>
   </div>
 </div>
+
 
 <h3>Etape 2</h3>
 <p class="inline" Markdown>
@@ -56,4 +57,11 @@
   - Ajouter un titre et un label à la classe `Marker`
   - Mettre à jour le formulaire pour pouvoir entrer un titre et label en plus des coordonnées.
   - Ajouter `AgmInfoWindow` au template de `MarkerComponent`.
+</p>
+<p class="inline" Markdown>
+  Point clés de cette partie:
+  - Définition d'un composant avec un `@Input()`
+  - Implémentation et déclaration d'un service (`@Injectable`)
+  - Injection de dépendance
+  - `NgFor` directive (et l'attribut template `*`)
 </p>

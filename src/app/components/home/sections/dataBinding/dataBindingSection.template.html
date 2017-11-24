@@ -6,15 +6,17 @@
 <img class="example-image" src="./images/examples/center.PNG"/>
 <p class="inline" Markdown>
   Tout d'abord, nous allons souvent utiliser des coordonnées (latitude, longitude), autant utiliser les fonctionnalités de
-  TypeScript et créer une interface et une classe pour les coordonnées. On regroupera les classes dont on a besoin dans `src/app/models`.
+  TypeScript et créer une `Interface` et une `Class` pour les coordonnées.
 </p>
-<app-code-tab fileName="models/coordinates.ts" filePath="./code/dataBinding/coordinates.ts" ></app-code-tab>
-<!-- <markdown path="./code/dataBinding/coordinates.ts"></markdown> -->
+<app-code-tab fileName="src/app/models/coordinates.ts" filePath="./code/dataBinding/coordinates.ts" ></app-code-tab>
 <p class="inline" Markdown>
   Comme le nom de la partie l'indique, nous allons utiliser la directive `NgModel` du package `@angular/form` pour le formulaire.
+  Dans notre cas le `ngModel` n'est pas obligatoire, du moins nous n'utiliserons que très peu de toutes les fonctionnalités qu'il propose
+  mais il est important que vous le voyez pour pouvoir mettre en place des formulaires plus complexes.
+  Je vous invite donc à jeter un oeil à la partie [How to use](https://angular.io/api/forms/NgModel#how-to-use) de la documentation.
 </p>
 <p class="inline" Markdown>
-  Il est maintenant temps d'écrire le code par vous même. Les étapes à suivre sont les suivantes:
+  Pour cette partie, les étapes à suivre sont les suivantes:
   - Importer et utiliser `ICoordinates` dans `MapComponent`
   - Importer le module permettant d'utiliser `NgModel`
   - Mettre à jour le template de `MapComponent` pour y ajouter le block "Centrer la carte" sur la gauche
@@ -27,9 +29,10 @@
 </p>
 <p class="inline" Markdown>
   On a jusqu'ici profité des `inputs` du composant `agm-map` (`latitude` et `longitude`), pour mettre à
-  jour les coordonnées de notre composants quand le centre change, on va devoir utiliser l'évènement `centerChange`.
-  Il faut associer une fonction à cet évènement qui mettra à jour les coordonnées du centre de la carte.
-  Cette fonction prendra l'`event` de [LatLngLiteral](https://angular-maps.com/api-docs/agm-core/interfaces/LatLngLiteral.html)
+  jour les coordonnées de notre composants quand le centre change, on va devoir utiliser l'évènement (`output`) `centerChange`.
+  Il faut associer une fonction à cet évènement qui mettra à jour les coordonnées du centre de la carte
+  (5ème ligne de `Template syntax` de l'[Angular cheat sheet](https://angular.io/guide/cheatsheet)).
+  Cette fonction prendra en paramètre l'`event` de type [LatLngLiteral](https://angular-maps.com/api-docs/agm-core/interfaces/LatLngLiteral.html) et mettra à jour les coordonnées de la carte.
 </p>
 <h3>Bonus</h3>
 <p class="inline" Markdown>
@@ -38,3 +41,10 @@
   `geolocation` du navigateur. Le code de la méthode est le suivant, à vous de l'ajouter à l'instanciation du composant.
 </p>
 <markdown path="./code/dataBinding/geolocation.ts"></markdown>
+<p class="inline" Markdown>
+  Les points clés de cette partie sont les suivants:
+  - Création de classe et interface pour nos coordonnées: Pourquoi et comment?
+  - Découverte du `NgModel`.
+  - Ecoute d'un évènement template.
+  - Utilisation du `binding component-template` pour mettre à jour le centre de la carte et les données du formulaire.
+</p>
