@@ -16,4 +16,4 @@ This project has been created using Angular CLI `ng new` command. Before the fir
 - Add the routing with module (pages) lazy loading (home page only with code examples and instructions to start coding)
 
 ## Get started
-To start the project, run `npm start` in the project directory and go to `localhost:4242`.
+To start the project for the first time, run `npm install` then `npm start` in the project directory and go to `localhost:4242`.
