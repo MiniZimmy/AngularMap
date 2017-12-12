@@ -1,10 +1,12 @@
-import { AgmCoreModule } from "@agm/core";
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { CommonModule } from "@angular/common";
-import { HomeModule } from './components';
-import { Header } from "./common";
+
+import { AgmCoreModule } from '@agm/core'; //Import the exported AgmCoreModule in this file
+
+import { Header } from './common';
+
 import { AppComponent } from './app.component';
+import { APP_ROUTING } from './app.routing';
 import { MapComponent } from './map.component'; //Import the new map component
 
 @NgModule({
@@ -13,7 +15,7 @@ import { MapComponent } from './map.component'; //Import the new map component
     MapComponent //Declare the MapComponent so you can use it in this module
   ],
   imports: [
-    BrowserModule, CommonModule,
+    BrowserModule,
     Header,
     AgmCoreModule.forRoot({
       apiKey: 'XxxxxxxXXX-123456'

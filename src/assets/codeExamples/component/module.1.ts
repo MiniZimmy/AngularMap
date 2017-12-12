@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
 
 import { AgmCoreModule } from '@agm/core'; //Import the exported AgmCoreModule in this file
 
