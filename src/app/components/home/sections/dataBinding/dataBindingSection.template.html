@@ -6,11 +6,42 @@
 <img class="example-image" src="./images/examples/center.PNG"/>
 <p class="inline" Markdown>
   Tout d'abord, nous allons souvent utiliser des coordonnées (latitude, longitude), autant utiliser les fonctionnalités de
-  TypeScript et créer une `Interface` et une `Class` pour les coordonnées.
+  TypeScript et créer une `Interface` et une `Class` pour les coordonnées. <br><br>
+  ***
+  ### Petit Rappel
+  TypeScript n'apporte pas la notion de classe, elle éxiste déjà dans JavaScript, la compilation d'une classe TypeScript donnera
+  donc une classe JavaScript. En revanche, la notion d'interface est définie par TypeScript et n'a aucun
+  équivalent en JavaScript. Après compilation en JavaScript (et donc au runtime), il ne restera aucune trace de l'interface! <br>
+  En TypeScript, on utilisera les interfaces afin de définir un contrat fonctionnel et structurel que les objets de ce type devront respecter.
+  La classe quant à elle nous permettra de définir et créer des instances d'un certain type et donc d'en obtenir une implémentation (avec le mot clé `new`). <br>
+  Dans notre cas, l'interface n'est pas obligatoire, tout aurait pu être fait avec des classes. J'ai pris pour habitude de définir les classes
+  comme le montre l'extrait de code ci-dessous car cela facilite, selon moi, le développement d'application en TypeScript.
+  En effet, on s'assurera ici que l'objet donné en paramètre du constructeur doit respecter le contrat définit par l'interface correspondante.
+  <br>
+  On ne le verra pas dans ce tutoriel, mais les interfaces sont aussi utiles à définir la structure d'un JSON retourné par une API
+  et donc d'accéder immédiatement aux propriétés qu'il contient. Une fois encore, il est possible de le faire avec des classes,
+  mais celle ci se retrouveront dans le JavaScript final.
+  ***
 </p>
 <app-code-tab fileName="src/app/models/coordinates.ts" filePath="./code/dataBinding/coordinates.ts" ></app-code-tab>
 <p class="inline" Markdown>
-  Comme le nom de la partie l'indique, nous allons utiliser la directive `NgModel` du package `@angular/form` pour le formulaire.
+  ***
+  ### Data Binding in Angular
+  On retrouve dans Angular 4 types de bindings, toutes définies dans la [Cheat sheet](https://angular.io/guide/cheatsheet) d'Angular:
+  - Interpolation: `{{'{'}}{{'{'}}property{{'}'}}{{'}'}}`: Extrait la valeur de `property` (défini coté composant) dans le template.
+  One way binding du composant vers le template.
+  - Property Binding: `[value]="property"`: Assigne la valeur de `property` (défini coté composant) à `value`. One way binding du composant vers le template.
+  Note: équivaut à `value="{{'{'}}{{'{'}}property{{'}'}}{{'}'}}"`
+  - Event Binding: `(event)="method($event)"`: Appelle `method` quand l'`event` est propagé (Utilisé pour écouter l'évènement `click` du bouton dans la partie suivante).
+  - Two-Way Data Binding: `input [(ngModel)]="coordinates.longitude" [ngModelOptions]="..."` <br>
+  La directive NgModel permet d'implementer le `two-way data binding` (utilise à la fois le `property binding` et l'`event binding`); Les utilisateurs d'AngularJs la reconnaitront.
+  Dans le cas ci dessus, on lie l'attribut `longitude` de l'objet `coordinates` directement à la valeur de l'input,
+  ce qui veut dire que quand `longitude` changera dans le composant, la valeur de l'input (coté template) sera mise à jour.
+  De même, lorsque l'utilisateur changera la valeur de l'`input`, l'objet `coordinates` sera mis à jour.
+  ***
+</p>
+<p class="inline" Markdown>
+  Comme le nom de la partie l'indique, nous allons utiliser la directive `NgModel` contenue dans `FormsModule` du package `@angular/form` pour le formulaire.
   Dans notre cas le `ngModel` n'est pas obligatoire, du moins nous n'utiliserons que très peu de toutes les fonctionnalités qu'il propose
   mais il est important que vous le voyez pour pouvoir mettre en place des formulaires plus complexes.
   Je vous invite donc à jeter un oeil à la partie [How to use](https://angular.io/api/forms/NgModel#how-to-use) de la documentation.

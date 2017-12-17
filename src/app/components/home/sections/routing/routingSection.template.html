@@ -12,7 +12,7 @@
 </p>
 <app-code-tab fileName="app.routing.ts" filePath="./code/routing/routing.ts" ></app-code-tab>
 <p class="inline" Markdown>
-  `Routes` est simplement une liste de `Route`. Toutes les propriétés sont détaillées dans la [documentation](https://angular.io/api/router/Routes#description), les étapes principales sont les suivantes:
+  `Routes` est simplement une liste de `Route`. Toutes les propriétés sont détaillées dans la [documentation](https://angular.io/api/router/Routes#description), les propriétés principales sont les suivantes:
   - `path`: Nom de la route (sera utilisé dans l'URL), dans notre cas `map` permettra de créer la route `localhost:xxxx/map`
   - `component`: Composant à afficher -- eager loading
   - `loadChildren`: Module a loader -- [lazy loading](https://angular.io/api/router/Routes#lazy-loading)
@@ -29,7 +29,7 @@
   La propriété `loadChildren` nous permet de spécifier seulement le chemin vers le fichier qui définit le fichier à loader ainsi que le nom de ce dernier.
 </p>
 <p class="inline" Markdown>
-  Une fois notre nouvelle route créée, il ne faut pas oublier d'ajouter dans les modules "lazy loadé" (ici `map.module.ts`)
+  Une fois notre nouvelle route créée, il ne faut pas oublier d'ajouter dans les modules "lazy loadés" (ici `map.module.ts`)
   le composant à créer quand on "navigue" vers cette route.
 </p>
 <app-code-tab fileName="map/map.module.ts" filePath="./code/routing/map.module.ts" ></app-code-tab>

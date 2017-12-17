@@ -15,10 +15,20 @@
   On utilisera le dossier components qui à déjà été créé pour faire la `Home` page.
 </p>
 <p class="inline" Markdown>
+  En résumé, pour déclarer un module simple on va:
+  - Créer un dossier portant le nom du module: `./moduleName`
+  - Créer les fichier qui acceuilleront le (ou les) composant, son template, et ses feuilles de styles: `./moduleName/moduleName.component.ts`, `./moduleName/moduleName.template.html` et `./moduleName/moduleName.style.scss`
+  - Créer le fichier qui accueillera le module: `./moduleName/index.ts` ou `./moduleName/moduleName.module.ts`.
+
+  Les noms des fichiers n'influent en rien le comportement d'Angular pour retrouver les composants,
+  le fait de les nommer ainsi n'est qu'une convention, bien pratique pour déterminer le rôle de chaque fichier. <br>
+  Nous verrons plus loin dans cette partie comment et pourquoi utiliser les fichiers `index.ts`.
+</p>
+<p class="inline" Markdown>
   Apres avoir déplacé nos fichiers `map.*` dans le dossier `map`.
   On peut déclarer notre nouveau module de la meme facon que le module `AppModule`:
 </p>
-<app-code-tab fileName="component/map/map.module.ts" filePath="./code/module/map.module.ts" ></app-code-tab>
+<app-code-tab fileName="components/map/map.module.ts" filePath="./code/module/map.module.ts" ></app-code-tab>
 <p>
   La déclaration du module est très simple: On déclare les components de ce module, on importe les modules dont
   on va avoir besoin et enfin on exporte les composants qui seront utilisés dans les templates des composants qui font partie
@@ -31,13 +41,16 @@
 </p>
 <app-code-tab fileName="app.module.ts" filePath="./code/module/app.module.ts" ></app-code-tab>
 <p class="inline" Markdown>
-  Il est bon de remarquer que pour importer le module ES6 `mapModule`, nous avons simplement spécifié le dossier de composants
-  `import {{ '{' }} MapModule {{ '}' }} from './components';`.
-  Ici on veut importer `MapModule` depuis `./component`. La `class` MapModule sera alors cherchée dans `./components/index.ts`,
-  qui quant à lui exporte tout le contenu de `./map/index.ts`, fichier dans lequel la classe `MapModule` est exportée.
+  Ici on veut importer `MapModule` défini dans `./components/map/map.module.ts`.
+  Pourtant, lors de l'import, on précise seulement le dossier parent `components`:
+  `import {{ '{' }} MapModule {{ '}' }} from './components';`. <br>
+  La `class` MapModule sera alors cherchée dans `./components/index.ts`,
+  qui quant à lui `export` tout le contenu de `./map/index.ts`, fichier dans lequel la classe `MapModule` est exportée. <br>
+  Sans ces fichiers `index.ts`, il faudrait exporter les modules directement depuis le fichier qui le défini:
+  `import {{ '{' }} MapModule {{ '}' }} from './components/map/map.module';`.
 </p>
 <p>
-  Cela permet non seulement d'éviter de de devoir spécifier le chemin jusqu'au fichier qui contient la déclaration qui nous intéresse
+  Cela permet non seulement d'éviter de devoir spécifier le chemin jusqu'au fichier qui contient la déclaration qui nous intéresse
   mais aussi de pourvoir regrouper les imports de tous nos futurs composants en une ligne.
 </p>
 <p class="inline" Markdown>
