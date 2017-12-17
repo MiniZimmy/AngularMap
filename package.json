@@ -8,7 +8,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "pages": "ng build --prod --output-path docs --base-href https://minizimmy.github.io/AngularMap/"
   },
   "private": true,
   "dependencies": {

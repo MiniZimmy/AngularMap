@@ -12,7 +12,7 @@ import { MapComponent } from './map.component';
   imports: [
     CommonModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyBXXA5WeqPp88kMAVqOYpLt-c389PofZs8'
+      apiKey: '?????????????????????'
     }),
     RouterModule.forChild([
       {path: '', component: MapComponent} //MapComponent to be loaded when navigating to the map path
